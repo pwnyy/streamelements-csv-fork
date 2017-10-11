@@ -7,7 +7,7 @@ This is an external script that was made by Slickrick, it was made in the intent
 
 **1)** Download the streamelements-csv.zip  
 **2)** Open and Configure the ```config.toml``` file. (Preferably with Notepad++).  
-**3)** Run the respective ```.bat``` file.  
+**3)** Run the respective ```.cmd``` file.  
 
 
 ``` Current leaderboard is for all points earned from watching the stream and gambling points.```  
