@@ -11,6 +11,9 @@ extern crate serde_derive;
 extern crate serde_json;
 extern crate simplelog;
 extern crate toml;
+extern crate structopt;
+#[macro_use]
+extern crate structopt_derive;
 
 use chrono::offset::Utc;
 use csv::WriterBuilder;
@@ -18,6 +21,7 @@ use std::fs::File;
 
 mod data;
 use data::{ActualConfig, Alltime, Error, User};
+use structopt::StructOpt;
 
 const BASE_URL: &str = "https://api.streamelements.com/kappa/v1";
 
@@ -31,6 +35,7 @@ fn main() {
 }
 
 fn run() -> Result<()> {
+    let matches = Opts::from_args();    
     let config = load_toml()?;
     let channel = config.channel();
     info!("loaded channel: {}", channel);
@@ -40,7 +45,11 @@ fn run() -> Result<()> {
     let alltime_url = format!("{}/points/{}/alltime/1000", BASE_URL, channel);
     let top_url = format!("{}/points/{}/top/1000", BASE_URL, channel);
     
-    let response: Alltime = request.get(&top_url).send()?.json()?;
+    let url = match matches {
+        Opts::Alltime => alltime_url,
+        Opts::Top => top_url,
+    };
+    let response: Alltime = request.get(&url).send()?.json()?;
     info!("received response from streamelements api");
     
     let today = Utc::today().format("%d-%m-%Y");
@@ -64,7 +73,7 @@ fn run() -> Result<()> {
     for offset in 2..offset_count + 1 {
         let offset = offset * 1000;
         let resp: Alltime = request
-            .get(&format!("{}?offset={}", top_url, offset))
+            .get(&format!("{}?offset={}", url, offset))
             .send()?
             .json()?;
         info!("received response from streamelements api");
@@ -108,4 +117,16 @@ fn write_to_csv(csv: &mut csv::Writer<File>, users: &[User]) -> Result<()> {
         csv.serialize(user)?;
     }
     Ok(())
+}
+
+
+#[derive(Debug, StructOpt)]
+#[structopt(name = "streamelements-csv")]
+enum Opts {
+    #[structopt(name = "alltime")]
+    /// Uses the api to get the alltime top users
+    Alltime,
+    #[structopt(name = "top")]
+    /// Uses the api to get the Top users currently
+    Top,
 }
