@@ -40,14 +40,15 @@ fn run() -> Result<()> {
 	let response: Alltime = request.get(&top_url)
 								   .send()?
 								   .json()?;
-
+	info!("received response from streamelements api");
 	let today = Utc::today()
 					.format("%d-%m-%Y");
 
+	info!("date for filename: {}", today);
 	let mut csv = WriterBuilder::new()
 								.has_headers(false)
 								.from_path(format!("{}-top-points.csv", today))?;
-
+	info!("successfully created csv writer");
 	write_to_csv(&mut csv, &response.users())?;
 	if response._total < 1000 {
 		return Ok(())
@@ -60,7 +61,9 @@ fn run() -> Result<()> {
 		let resp: Alltime = request.get(&format!("{}?offset={}", top_url, offset))
 			   			  		   .send()?
 			   			  		   .json()?;
+		info!("received response from streamelements api");
 		write_to_csv(&mut csv, &resp.users())?;
+		info!("successfully wrote to csv");
 	}
 	Ok(())
 }
