@@ -1,7 +1,7 @@
 # streamelements-csv
 
 # How to export your points from StreamElements.
-This is an external script that was made by Slickrick, it was made in the intention of making it easier for people to export their points from StreamElements.com
+This is an external script, it was made in the intention of making it easier for people to export their points from StreamElements.com
 
 ## Steps
 
