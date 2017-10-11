@@ -45,9 +45,9 @@ fn run() -> Result<()> {
     let alltime_url = format!("{}/points/{}/alltime/1000", BASE_URL, channel);
     let top_url = format!("{}/points/{}/top/1000", BASE_URL, channel);
     
-    let url = match matches {
-        Opts::Alltime => alltime_url,
-        Opts::Top => top_url,
+    let (url, opt)  = match matches {
+        Opts::Alltime => (alltime_url, "alltime"),
+        Opts::Top => (top_url, "top"),
     };
     let response: Alltime = request.get(&url).send()?.json()?;
     info!("received response from streamelements api");
@@ -57,7 +57,7 @@ fn run() -> Result<()> {
     
     let mut csv = WriterBuilder::new()
         .has_headers(false)
-        .from_path(format!("{}-top-points.csv", today))?;
+        .from_path(format!("{}-{}-points.csv", today, opt))?;
     info!("successfully created csv writer");
     write_to_csv(&mut csv, &response.users())?;
 

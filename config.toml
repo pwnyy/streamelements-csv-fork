@@ -1,0 +1,7 @@
+[info]
+# username of the channel to look up
+channel = ""
+# Doesn't include users at or below the cutoff threshold in the csv
+# used to ignore inactive users
+# remove the "#" to set a cutoff
+# cutoff = 100
