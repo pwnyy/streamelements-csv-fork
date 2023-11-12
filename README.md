@@ -1,5 +1,5 @@
 # streamelements-csv
-
+## Branch may not be uptodate however latest release is working as intended, last checked (12th November 2023).
 # How to export your points from StreamElements.
 This is an external script, it was made with the intention of making it easier for people to export their points from StreamElements.com
 
