@@ -5,7 +5,7 @@ This is an external script, it was made with the intention of making it easier f
 
 ## Steps
 
-**1)** Download the [streamelements-csv.zip] (https://github.com/pwnyy/streamelements-csv-fork/releases/tag/Latest) 
+**1)** Download the [streamelements-csv.zip](https://github.com/pwnyy/streamelements-csv-fork/releases/tag/Latest) 
 **2)** Open and Configure the ```config.toml``` file. (Preferably with Notepad++).  
 **3)** Run the respective ```.cmd``` file.  
 
